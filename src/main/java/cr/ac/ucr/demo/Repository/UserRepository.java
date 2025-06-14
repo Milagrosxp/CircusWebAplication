@@ -3,6 +3,8 @@ package cr.ac.ucr.demo.Repository;
 import cr.ac.ucr.demo.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Repository
@@ -30,6 +32,17 @@ public class UserRepository {
         return userList.remove(user);
     }
 
+    public boolean editUser(User user){
+        for(int i=0; i<userList.size();i++){
+            if(user.getIdUser()==userList.get(i).getIdUser()){
+                userList.set(i, user);
+                return true;
+            }
+        }
+        return false;
+    }
 
-
+    public ArrayList<User> getAll(){
+        return userList;
+    }
 }
