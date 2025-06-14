@@ -12,7 +12,7 @@ public class UserRepository {
     @Autowired
     ArrayList<User> userList;
 
-    public boolean add(User user){
+    public boolean addUser(User user){
         return userList.add(user);
     }
 
