@@ -1,0 +1,27 @@
+.containerFormulario{
+    background-color: aqua;
+    width: 400px;
+    height: 600px;
+    margin: auto;
+    padding: 50px;
+    margin-top: 50px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: black;
+    border-style: solid;
+}
+.tituloFormulario{
+    text-align: center;
+    margin-bottom: 100px;
+}
+label{
+    display: block;
+   
+}
+input{
+    display:block;
+    margin: 10px 0;
+    width: 300px;
+    border-top: none;
+    border-left: none;
+}
