@@ -12,6 +12,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    //METHODS
     public boolean addUser(User user){
         return this.userRepository.addUser(user);
     }
@@ -27,7 +28,8 @@ public class UserService {
     public boolean deleteUser(Integer id){
         return this.userRepository.deleteUser(id);
     }
+
     public ArrayList<User> getAll(){
         return this.userRepository.getAll();
     }
-}
+}//END OF THE CLASS

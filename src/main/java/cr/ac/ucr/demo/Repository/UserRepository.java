@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 @Repository
 public class UserRepository {
-    @Autowired
+    //@Autowired  (Lo comenté porque me estaba dando error, sorry)
     ArrayList<User> userList;
 
+    //METHODS
     public boolean addUser(User user){
         return userList.add(user);
     }
@@ -24,6 +25,7 @@ public class UserRepository {
         }
         return new User();
     }
+
     public boolean deleteUser(Integer id){
         User user = findById(id);
         if(user.getIdUser()==null){
@@ -45,4 +47,4 @@ public class UserRepository {
     public ArrayList<User> getAll(){
         return userList;
     }
-}
+}//END OF THE CLASS

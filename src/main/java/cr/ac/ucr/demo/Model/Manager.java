@@ -1,30 +1,29 @@
 package cr.ac.ucr.demo.Model;
 
-
-public class User {
-    private Integer idUser;
+public class Manager {
+    private Integer idManager;
     private String name;
     private String telephone;
     private String password;
 
-    //CONSTRUCTOR METHODS
-    public User(Integer idUser, String password, String telephone, String name) {
-        this.idUser = idUser;
-        this.password = password;
-        this.telephone = telephone;
-        this.name = name;
+    //CONSTRUCTOR METHOD
+    public Manager() {
     }
 
-    public User() {
+    public Manager(Integer idManager, String name, String telephone, String password) {
+        this.idManager = idManager;
+        this.name = name;
+        this.telephone = telephone;
+        this.password = password;
     }
 
     //SET & GET METHODS
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getIdManager() {
+        return idManager;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setIdManager(Integer idManager) {
+        this.idManager = idManager;
     }
 
     public String getName() {
@@ -50,4 +49,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }//END OF THE CLASS
