@@ -17,9 +17,10 @@ public class UserService {
         return this.userRepository.addUser(user);
     }
 
-    public User findById(Integer id){
-        return this.userRepository.findById(id);
+    public User findByIdUser(Integer id) {
+        return userRepository.findByIdUser(id);
     }
+
 
     public boolean editUser(User user){
         return this.userRepository.editUser(user);
