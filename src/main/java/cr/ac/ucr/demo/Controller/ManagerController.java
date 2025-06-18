@@ -24,20 +24,18 @@ public class ManagerController {
     //METHODS
     @GetMapping("/{id}")
     public ResponseEntity<?> findByID(@PathVariable Integer id){
-        Manager managerFind = this.managerService.findByID(id);
-        if(managerFind == null || managerFind.getIdManager() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El manager con el ID "+id+" no se encuentra registrado.");
+        if(managerService.findByID(id).getIdManager() == 0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manager not found.");
         }
-        return ResponseEntity.ok(managerFind);
+        return ResponseEntity.status(HttpStatus.OK).body(managerService.findByID(id));
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers(){
-        ArrayList<Manager> listUser = this.managerService.getAll();
-        if(listUser.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No existen managers registrados");
+    public ResponseEntity<?> getAll(){
+        if(managerService.getAll().isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("There aren't managers registered in the system.");
         }
-        return ResponseEntity.ok(listUser);
+        return ResponseEntity.status(HttpStatus.OK).body(managerService.getAll());
     }
 
 }//END OF THE CLASS

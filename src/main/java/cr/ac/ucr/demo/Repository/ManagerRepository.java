@@ -8,7 +8,17 @@ import java.util.ArrayList;
 
 @Repository
 public class ManagerRepository {
-    ArrayList<Manager> managerList;
+    ArrayList<Manager> managerList = new ArrayList<>();;
+
+    //CONSTRUCTOR METHOD
+    public ManagerRepository(){
+        System.out.println("Precargando managers...");
+        managerList.add(new Manager(584, "Daylin", "1234-5678", "pass101"));
+        managerList.add(new Manager(662, "Darian", "8765-4321", "pass202"));
+        managerList.add(new Manager(660, "Joseph", "1827-3645", "pass303"));
+        managerList.add(new Manager(841, "Kevin", "5463-7281", "pass404"));
+        managerList.add(new Manager(300, "Aaron", "1029-3847", "pass505"));
+    }
 
     //METHODS
     public Manager findByID(Integer id){
