@@ -1,50 +1,45 @@
 package cr.ac.ucr.demo.Repository;
 
 import cr.ac.ucr.demo.Model.Show;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
 @Repository
 public class ShowRepository {
-    //@Autowired
-    ArrayList<Show> showList;
+    private final ArrayList<Show> showList = new ArrayList<>();
 
-    //METHODS
-    public boolean addShow(Show show){
+    public boolean addShow(Show show) {
         return showList.add(show);
     }
 
-    public Show findByID(Integer id){
-        for(int i=0; i < showList.size(); i++){
-            if(showList.get(i).getIdShow() == id){
-                return showList.get(i);
-            }
-        }
-        return new Show();
+    public ArrayList<Show> getAllShow() {
+        return showList;
     }
 
-    public boolean deleteShow(Integer id){
-        Show show = findByID(id);
-        if(show.getIdShow()==null){
-            return false;
+    public Show findByIdShow(Integer idShow) {
+        for (Show show : showList) {
+            if (show.getIdShow().equals(idShow)) {
+                return show;
+            }
         }
+        return null;
+    }
+
+    public boolean deleteShow(Integer idShow) {
+        Show show = findByIdShow(idShow);
+        if (show == null) return false;
         return showList.remove(show);
     }
 
-    public boolean editShow(Show show){
-        for(int i=0; i<showList.size();i++){
-            if(show.getIdShow()==showList.get(i).getIdShow()){
+    public boolean editShow(Show show) {
+        for (int i = 0; i < showList.size(); i++) {
+            if (showList.get(i).getIdShow().equals(show.getIdShow())) {
                 showList.set(i, show);
                 return true;
             }
         }
         return false;
-    }
-
-    public ArrayList<Show> getAllShows(){
-        return showList;
     }
 
 }//END OF THE CLASS

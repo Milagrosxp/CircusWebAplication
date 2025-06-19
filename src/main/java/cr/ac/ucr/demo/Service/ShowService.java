@@ -16,12 +16,12 @@ public class ShowService {
     //METHODS
     public boolean addShow(Show show){ return this.showRepository.addShow(show); }
 
-    public Show findById(Integer id){ return this.showRepository.findByID(id); }
+    public Show findById(Integer id){ return this.showRepository.findByIdShow(id); }
 
     public boolean editShow(Show show){ return this.showRepository.editShow(show); }
 
     public boolean deleteShow(Integer id){ return this.showRepository.deleteShow(id); }
 
-    public ArrayList<Show> getAll(){ return this.showRepository.getAllShows(); }
+    public ArrayList<Show> getAll(){ return this.showRepository.getAllShow(); }
 
 }//END OF THE CLASS
