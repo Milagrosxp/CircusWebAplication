@@ -30,7 +30,7 @@ public class TicketController {
             return ResponseEntity.badRequest().body(errorMap);
         }
 
-        if(ticketService.findByIdTicket(ticket.getIdTicket()) != null){
+        if(ticketService.findByIdTicket(ticket.getIdTicket()).getIdTicket() != null){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This Ticket is already registered");
         }
 
