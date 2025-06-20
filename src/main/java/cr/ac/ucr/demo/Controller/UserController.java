@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("api/users")
@@ -30,7 +32,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(errorMap);
         }
 
-        if(userService.findByIdUser(user.getIdUser()) != null){
+        if(userService.findByIdUser(user.getIdUser()).isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is registered");
         }
 
@@ -47,8 +49,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable Integer id){
-        User user = userService.findByIdUser(id);
-        if(user == null || user.getIdUser() == null){
+        Optional<User> user = userService.findByIdUser(id);
+        if(!user.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -56,10 +58,12 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id){
-        if(userService.deleteUser(id)){
-            return ResponseEntity.status(HttpStatus.OK).body("User eliminado correctamente");
+        Optional<User> userOptional = this.userService.findByIdUser(id);
+        if(!userOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User is using this ID.");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se pudo eliminar el usuario");
+        this.userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
     }
 
     @PutMapping
@@ -71,11 +75,11 @@ public class UserController {
             }
             return ResponseEntity.badRequest().body(errorMap);
         }
-
-        if(userService.findByIdUser(user.getIdUser()) == null){
+        Optional<User> userOptional = this.userService.findByIdUser(user.getIdUser());
+        if(!userOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(userService.editUser(user));
+        userService.editUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body("User updated successfully.");
     }
 }

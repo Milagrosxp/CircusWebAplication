@@ -1,36 +1,46 @@
 package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.User;
-import cr.ac.ucr.demo.Repository.UserRepository;
+import cr.ac.ucr.demo.Repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    IUserRepository userRepository;
 
     //METHODS
-    public boolean addUser(User user){
-        return this.userRepository.addUser(user);
+    public User addUser(User user){
+        return this.userRepository.save(user);
     }
 
-    public User findByIdUser(Integer id) {
-        return userRepository.findByIdUser(id);
+    public Optional<User> findByIdUser(Integer id) {
+
+        return userRepository.findById(id);
     }
 
 
-    public boolean editUser(User user){
-        return this.userRepository.editUser(user);
+    public boolean editUser(User editUser){
+        Optional<User> user = this.findByIdUser(editUser.getIdUser());
+        if(user.isEmpty()){
+            return false;
+        }
+        this.deleteUser(editUser.getIdUser());
+        this.addUser(editUser);
+        return true;
+
     }
 
-    public boolean deleteUser(Integer id){
-        return this.userRepository.deleteUser(id);
+    public void deleteUser(Integer id){
+        this.userRepository.deleteById(id);
     }
 
-    public ArrayList<User> getAll(){
-        return this.userRepository.getAll();
+    public List<User> getAll(){
+        return this.userRepository.findAll();
     }
 }//END OF THE CLASS
