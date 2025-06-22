@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Repository;
 
 import cr.ac.ucr.demo.Model.Manager;
+import cr.ac.ucr.demo.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,12 +23,12 @@ public class ManagerRepository {
 
     //METHODS
     public Manager findByID(Integer id){
-        for(int i=0; i < managerList.size(); i++){
-            if(managerList.get(i).getIdManager() == id){
-                return managerList.get(i);
+        for (Manager manager : managerList) {
+            if (manager.getIdManager().equals(id)) {
+                return manager;
             }
         }
-        return new Manager();
+        return null;
     }
 
     public ArrayList<Manager> getAllManagers(){

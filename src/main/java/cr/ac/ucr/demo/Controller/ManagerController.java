@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.Manager;
+import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Repository.ManagerRepository;
 import cr.ac.ucr.demo.Service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,11 @@ public class ManagerController {
     //METHODS
     @GetMapping("/{id}")
     public ResponseEntity<?> findByID(@PathVariable Integer id){
-        if(managerService.findByID(id).getIdManager() == 0){
+        Manager manager = managerService.findByID(id);
+        if(manager == null || manager.getIdManager() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manager not found.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(managerService.findByID(id));
+        return ResponseEntity.status(HttpStatus.OK).body(manager);
     }
 
     @GetMapping

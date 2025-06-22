@@ -8,10 +8,6 @@ public class Manager {
 
     //CONSTRUCTOR METHOD
     public Manager() {
-        this.idManager = 0;
-        this.name = "Ghost";
-        this.telephone = "00-00";
-        this.password = "0000";
     }
 
     public Manager(Integer idManager, String name, String telephone, String password) {

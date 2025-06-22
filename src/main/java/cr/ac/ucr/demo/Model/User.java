@@ -1,7 +1,14 @@
 package cr.ac.ucr.demo.Model;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_user")
 public class User {
+    @Id
     private Integer idUser;
     private String name;
     private String telephone;

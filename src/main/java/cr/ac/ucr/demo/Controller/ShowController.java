@@ -54,7 +54,7 @@ public class ShowController {
         if(showService.deleteShow(id)){
             return ResponseEntity.status(HttpStatus.OK).body(showService.deleteShow(id));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(showService.deleteShow(id));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Show not found.");
     }
 
     @PutMapping
