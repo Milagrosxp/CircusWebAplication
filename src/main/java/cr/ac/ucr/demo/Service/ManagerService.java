@@ -1,24 +1,25 @@
 package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.Manager;
-import cr.ac.ucr.demo.Repository.ManagerRepository;
+import cr.ac.ucr.demo.Repository.IManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ManagerService {
     @Autowired
-    ManagerRepository managerRepository;
+    IManagerRepository managerRepository;
 
     //METHODS
-    public Manager findByID(Integer id){
-        return this.managerRepository.findByID(id);
+    public Optional<Manager> findByID(Integer id){
+        return this.managerRepository.findById(id);
     }
 
-    public ArrayList<Manager> getAll(){
-        return this.managerRepository.getAllManagers();
+    public List<Manager> getAll(){
+        return this.managerRepository.findAll();
     }
 
 }//END OF THE CLASS

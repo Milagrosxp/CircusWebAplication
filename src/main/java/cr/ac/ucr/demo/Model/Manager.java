@@ -1,6 +1,13 @@
 package cr.ac.ucr.demo.Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_managers")
 public class Manager {
+    @Id
     private Integer idManager;
     private String name;
     private String telephone;
