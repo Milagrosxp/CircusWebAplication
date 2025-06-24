@@ -2,26 +2,48 @@ package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.Show;
 import cr.ac.ucr.demo.Model.User;
+import cr.ac.ucr.demo.Repository.IShowRepository;
 import cr.ac.ucr.demo.Repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShowService {
     @Autowired
-    ShowRepository showRepository;
+    IShowRepository showRepository;
 
     //METHODS
-    public boolean addShow(Show show){ return this.showRepository.addShow(show); }
+    public Show addShow(Show show){
+        return this.showRepository.save(show);
+    }
 
-    public Show findById(Integer id){ return this.showRepository.findByIdShow(id); }
+    public Optional<Show> findByIdShow(Integer id) {
 
-    public boolean editShow(Show show){ return this.showRepository.editShow(show); }
+        return showRepository.findById(id);
+    }
 
-    public boolean deleteShow(Integer id){ return this.showRepository.deleteShow(id); }
 
-    public ArrayList<Show> getAll(){ return this.showRepository.getAllShow(); }
+    public boolean editShow(Show editShow){
+        Optional<Show> show = this.findByIdShow(editShow.getIdShow());
+        if(show.isEmpty()){
+            return false;
+        }
+        this.deleteShow(editShow.getIdShow());
+        this.addShow(editShow);
+        return true;
+
+    }
+
+    public void deleteShow(Integer id){
+        this.showRepository.deleteById(id);
+    }
+
+    public List<Show> getAll(){
+        return this.showRepository.findAll();
+    }
 
 }//END OF THE CLASS

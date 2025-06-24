@@ -1,9 +1,16 @@
 package cr.ac.ucr.demo.Model;
 
-import javax.xml.crypto.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "tb_show")
 public class Show {
+
+    @Id
     private Integer idShow;
     private String name;
     private Integer amountOfSeats;

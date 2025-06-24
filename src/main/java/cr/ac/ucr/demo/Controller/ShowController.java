@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.Show;
+import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/shows")
@@ -24,15 +26,18 @@ public class ShowController {
         if(result.hasErrors()){
             Map<String, String> errorMap = new HashMap<>();
             for(FieldError error: result.getFieldErrors()){
-                errorMap.put(error.getField() , error.getDefaultMessage());
+                errorMap.put(error.getField(), error.getDefaultMessage());
             }
             return ResponseEntity.badRequest().body(errorMap);
         }
-        if(showService.findById(show.getIdShow())!=null){
+
+        if(showService.findByIdShow(show.getIdShow()).isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is registered");
         }
+
         return ResponseEntity.status(HttpStatus.OK).body(showService.addShow(show));
     }
+
     @GetMapping
     public ResponseEntity<?> getAll(){
         if(showService.getAll().isEmpty()){
@@ -43,18 +48,21 @@ public class ShowController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getShow(@PathVariable Integer id){
-        if(showService.findById(id).getIdShow()==null){
+        Optional<Show> show = showService.findByIdShow(id);
+        if(!show.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Show not found.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(showService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(show);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteShow(@PathVariable Integer id){
-        if(showService.deleteShow(id)){
-            return ResponseEntity.status(HttpStatus.OK).body(showService.deleteShow(id));
+        Optional<Show> showOptional = this.showService.findByIdShow(id);
+        if(!showOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No show is using this ID.");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Show not found.");
+        this.showService.deleteShow(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Show deleted successfully.");
     }
 
     @PutMapping
@@ -66,10 +74,11 @@ public class ShowController {
             }
             return ResponseEntity.badRequest().body(errorMap);
         }
-        if(showService.findById(show.getIdShow()).getIdShow()==null){
+        Optional<Show> showOptional = this.showService.findByIdShow(show.getIdShow());
+        if(!showOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Show not found");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(showService.editShow(show));
+        showService.editShow(show);
+        return ResponseEntity.status(HttpStatus.OK).body("Show updated successfully.");
     }
-
 }
