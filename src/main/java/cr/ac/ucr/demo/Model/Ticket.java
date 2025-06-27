@@ -1,9 +1,6 @@
 package cr.ac.ucr.demo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tb_ticket")
@@ -11,10 +8,12 @@ public class Ticket {
     @Id
     private Integer idTicket;
     private Double price;
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "idShow")
     private Show show;
     private String category;
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "idUser")
     private User user;
 
     //CONSTRUCTOR

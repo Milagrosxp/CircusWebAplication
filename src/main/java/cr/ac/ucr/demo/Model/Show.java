@@ -1,9 +1,8 @@
 package cr.ac.ucr.demo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -22,6 +21,8 @@ public class Show {
     private Double vipPrice;
     private Date showTime;
     private String location;
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList<Ticket> ticketList;
 
     //CONSTRUCTOR METHOD
     public Show() {

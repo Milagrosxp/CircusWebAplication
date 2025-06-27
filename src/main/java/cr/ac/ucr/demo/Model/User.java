@@ -1,9 +1,9 @@
 package cr.ac.ucr.demo.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "tb_user")
@@ -13,6 +13,8 @@ public class User {
     private String name;
     private String telephone;
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList<Ticket> ticketList;
 
     //CONSTRUCTOR METHODS
     public User(Integer idUser, String password, String telephone, String name) {
