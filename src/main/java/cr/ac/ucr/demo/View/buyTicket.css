@@ -48,7 +48,7 @@ ul{
 
  .centralContainer{
     padding: 40px;
-    padding-left: 300px;
+    padding-left: 10%;
     background-color: #1B1B3A;
  }
  h3{
@@ -71,5 +71,30 @@ ul{
     color: #F8F1FF;
     border: none;
     font-size: 20px;
+ }
+
+ .containerFunciones{
+   background-color: red;
+   display: flex;
+   flex-flow: row;
+   padding-left: 5%;
+   padding-right: 5%;
+ }
+
+ .rowContainerFunciones{
+   padding: 5%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+ }
+ .pFunciones{
+   color: #F8F1FF;
+ }
+
+ footer{
+   background-color: #F8F1FF;
+ }
+ .h2Footer{
+   color: #2f2f2f;
  }
 
