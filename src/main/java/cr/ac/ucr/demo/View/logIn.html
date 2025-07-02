@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styleIndex.css">
+</head>
+<body>
+    <div class="containerFormulario" style="width: 400px; height: 400px;">
+        <form id="loginForm">
+            <h2 class="tituloFormulario">LOG IN</h2>
+            <label for="userName">User Name</label>
+            <input type="text" id="userName">
+            <label for="password">Password</label>
+            <input type="text" id="password">
+            <a href="index.html">Register</a>
+            <button>LOG IN</button>
+        </form>
+    </div>
+
+     <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Evita que el formulario recargue la página
+
+      const id = document.getElementById('id').value;
+      const password = document.getElementById('password').value;
+
+      fetch('/api/login', { // Ruta del backend Spring Boot
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('response').textContent = data.message;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('response').textContent = 'Error en la conexión.';
+      });
+    });
+  </script>
+</body>
+</html>

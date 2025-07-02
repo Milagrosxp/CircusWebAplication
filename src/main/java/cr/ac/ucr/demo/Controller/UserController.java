@@ -16,6 +16,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/users")
 public class UserController {
 
@@ -81,5 +82,10 @@ public class UserController {
         }
         userService.editUser(user);
         return ResponseEntity.status(HttpStatus.OK).body("User updated successfully.");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> logIn(@PathVariable Integer id, @PathVariable String password){
+
     }
 }
