@@ -43,4 +43,13 @@ public class UserService {
     public List<User> getAll(){
         return this.userRepository.findAll();
     }
+
+    public boolean userExist(Integer id, String password){
+        for(User user:this.getAll()){
+            if(user.getIdUser()==id && user.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
 }//END OF THE CLASS
