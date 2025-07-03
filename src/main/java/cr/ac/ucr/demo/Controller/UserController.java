@@ -85,8 +85,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> logIn(@PathVariable Integer id, @PathVariable String password){
-        if(this.userService.userExist(id, password)){
+    public ResponseEntity<?> logIn(@RequestBody User user){
+        if(this.userService.userExist(user.getIdUser(), user.getPassword())){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);

@@ -16,9 +16,9 @@
             <input type="text" id="password">
             <a href="index.html">Register</a>
             <button type="submit">LOG IN</button>
+            <p id="response" style="color: red;"></p>
         </form>
     </div>
-
      <script>
             document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault(); // Evita que el formulario recargue la página
@@ -31,13 +31,16 @@
             headers: {
             'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id, password })
+            body: JSON.stringify({ idUser: id, password: password })
         })
         .then(response => response.json())
         .then(valid => {
             if (valid === true) {
             // Redirige al usuario
+            document.body.classList.add("fade-out");
+            setTimeout(() => {
             window.location.href = "buyTicket.html";
+            }, 500); // espera la animación
             } else {
             // Muestra mensaje de error
             document.getElementById('response').textContent = "Credenciales incorrectas.";

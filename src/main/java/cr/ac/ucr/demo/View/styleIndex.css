@@ -1,8 +1,8 @@
 body{
-    background-color: #e0f7e0;
+    background-color: #1B1B3A;
 }
 .containerFormulario{
-    background-color: #6ac5cb;
+    background-color: #F8F1FF;
     width: 400px;
     height: 600px;
     margin: auto;
@@ -57,4 +57,9 @@ a{
 a:hover{
     text-decoration: underline;
     color: blue;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }

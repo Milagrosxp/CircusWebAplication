@@ -4,6 +4,7 @@ package cr.ac.ucr.demo.Model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
@@ -14,7 +15,7 @@ public class User {
     private String telephone;
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<Ticket> ticketList;
+    private List<Ticket> ticketList;
 
     //CONSTRUCTOR METHODS
     public User(Integer idUser, String password, String telephone, String name) {
@@ -58,5 +59,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }//END OF THE CLASS
