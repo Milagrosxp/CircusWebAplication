@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_show")
@@ -21,14 +22,16 @@ public class Show {
     private Double vipPrice;
     private Date showTime;
     private String location;
+    @Column(length = 1000)
+    private String image;
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<Ticket> ticketList;
+    private List<Ticket> ticketList;
 
     //CONSTRUCTOR METHOD
     public Show() {
     }
 
-    public Show(Integer idShow, String name, Integer amountOfSeats, Integer generalTicket, Double generalPrice, Integer plateaTicket, Double plateaPrice, Integer vipTicket, Double vipPrice, Date showTime, String location) {
+    public Show(Integer idShow, String name, Integer amountOfSeats, Integer generalTicket, Double generalPrice, Integer plateaTicket, Double plateaPrice, Integer vipTicket, Double vipPrice, Date showTime, String location, String image) {
         this.idShow = idShow;
         this.name = name;
         this.amountOfSeats = amountOfSeats;
@@ -40,6 +43,7 @@ public class Show {
         this.vipPrice = vipPrice;
         this.showTime = showTime;
         this.location = location;
+        this.image = image;
     }
 
     //SET & GET METHODS
@@ -87,5 +91,20 @@ public class Show {
 
     public void setLocation(String location) { this.location = location; }
 
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }//END OF THE CLASS
 

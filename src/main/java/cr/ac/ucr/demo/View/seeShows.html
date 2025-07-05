@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="seeShowsStyle.css">
+</head>
+<body>
+<header style="display: flex; flex-flow: row;">
+    <h2 style="width: 50%; padding: 20px;">Magic Ticket</h2>
+    <nav style="display: flex;width: 50%; justify-content: end; padding: 20px;">
+        <ul>
+            <a href="">Shows</a>
+            <a href="">My Tickets</a>
+            <a href="">Log out</a>
+        </ul>
+    </nav>
+</header>
+<h1>Shows Disponibles</h1>
+<div id="shows-container"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const respuesta = await fetch('http://localhost:8080/api/shows');
+        if (!respuesta.ok) throw new Error('No se pudieron obtener los shows');
+
+        const shows = await respuesta.json();
+        const contenedor = document.getElementById('shows-container');
+
+        shows.forEach(show => {
+          const card = document.createElement('div');
+          card.className = 'card-show';
+          card.innerHTML = `
+           <p><strong>Fecha:</strong> ${new Date(show.showTime).toLocaleString()}</p>
+            <img src="${show.image}" alt="" style="width:100%; height:180px;border-radius:8px;">
+            <h3>${show.name}</h3>
+            <p><strong>Ubicación:</strong> ${show.location}</p>
+            <p><strong>Asientos disponibles:</strong> ${show.amountOfSeats}</p>
+
+          `;
+          card.addEventListener('click', () => {
+           localStorage.setItem('showSeleccionado', JSON.stringify(show));
+           window.location.href = 'compra.html'; // redirige
+          });
+
+          contenedor.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error al cargar los shows:', error);
+      }
+    });
+</script>
+</body>
+</html>

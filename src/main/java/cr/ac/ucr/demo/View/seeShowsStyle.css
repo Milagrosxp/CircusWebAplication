@@ -1,0 +1,20 @@
+a{
+    color: black;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.card-show{
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+    width: 200px;
+    height: 350px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+h3{
+    margin: auto;
+    text-align: center;
+}

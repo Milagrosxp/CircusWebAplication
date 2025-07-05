@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+<h1 style="text-align:center;">Detalle del Show</h1>
+<div id="detalle-show" style="margin: 0 auto; width:500px"></div>
+
+<script>
+    const show = JSON.parse(localStorage.getItem('showSeleccionado'));
+    const contenedor = document.getElementById('detalle-show');
+
+    contenedor.innerHTML=`
+        <h2>Comprar Tickets para ${show.name}</h2>
+        <label>Tipo de Ticket:</label>
+        <select id="tipoTicket" name="Tipo de Ticket">
+            <option value="platea">Platea</option>
+            <option value="vip">vip</option>
+            <option value="general">General</option>
+        </select>
+    `
+</script>
+</body>
+</html>
