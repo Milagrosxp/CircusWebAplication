@@ -10,7 +10,10 @@ import java.util.List;
 @Table(name = "tb_show")
 public class Show {
 
+    @Column(name = "idShow")
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer idShow;
     private String name;
     private Integer amountOfSeats;

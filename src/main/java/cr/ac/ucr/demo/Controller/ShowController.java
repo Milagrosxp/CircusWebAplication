@@ -23,6 +23,13 @@ public class ShowController {
     ShowService showService;
 
     @PostMapping
+    public ResponseEntity<Show> addShow(@RequestBody Show show) {
+        Show nuevo = showService.addShow(show);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+    }
+
+
+    /*@PostMapping
     public ResponseEntity<?> addShow(@Validated @RequestBody Show show, BindingResult result){
         if(result.hasErrors()){
             Map<String, String> errorMap = new HashMap<>();
@@ -37,7 +44,7 @@ public class ShowController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(showService.addShow(show));
-    }
+    }*/
 
     @GetMapping
     public ResponseEntity<?> getAll(){
