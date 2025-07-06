@@ -32,11 +32,11 @@ public class ShowService {
         if(show.isEmpty()){
             return false;
         }
-        this.deleteShow(editShow.getIdShow());
-        this.addShow(editShow);
+        this.showRepository.save(editShow);  // Cambiado para solo guardar
         return true;
-
     }
+
+
 
     public void deleteShow(Integer id){
         this.showRepository.deleteById(id);
