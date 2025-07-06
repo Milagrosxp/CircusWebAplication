@@ -2,6 +2,8 @@ package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Service.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,10 +88,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> logIn(@RequestBody User user){
+    public ResponseEntity<?> logIn(@RequestBody User user, HttpSession session){
         if(this.userService.userExist(user.getIdUser(), user.getPassword())){
+            session.setAttribute("activeSession", this.userService.findByIdUser(user.getIdUser()).get());
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
+
+    @GetMapping("/activeUser")
+    public ResponseEntity<?> getActiveUser(HttpSession session){
+        return ResponseEntity.status(HttpStatus.OK).body(session.getAttribute("activeSession"));
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/tickets")
@@ -30,7 +31,7 @@ public class TicketController {
             return ResponseEntity.badRequest().body(errorMap);
         }
 
-        if(ticketService.findByIdTicket(ticket.getIdTicket()).getIdTicket() != null){
+        if(ticketService.findByIdTicket(ticket.getIdTicket()).get().getIdTicket() != null){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This Ticket is already registered");
         }
 
@@ -55,7 +56,9 @@ public class TicketController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTicket(@PathVariable Integer id){
-        if(ticketService.deleteTicket(id)){
+        Optional<Ticket> optionalTicket =  this.ticketService.findByIdTicket(id);
+        if(optionalTicket.isPresent()){
+            this.ticketService.deleteTicket(id);
             return ResponseEntity.status(HttpStatus.OK).body("Ticket eliminado");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se pudo eliminar el ticket");

@@ -1,36 +1,39 @@
 package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.Ticket;
+import cr.ac.ucr.demo.Repository.ITicketRepository;
 import cr.ac.ucr.demo.Repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService {
     @Autowired
-    TicketRepository ticketRepository;
+    ITicketRepository ticketRepository;
 
     //METHODS
-    public boolean addTicket(Ticket ticket){
-        return this.ticketRepository.addTicket(ticket);
+    public Ticket addTicket(Ticket ticket){
+        return this.ticketRepository.save(ticket);
     }
 
-    public Ticket findByIdTicket(Integer idTicket){
-        return this.ticketRepository.findByIdTicket(idTicket);
+    public Optional<Ticket> findByIdTicket(Integer idTicket){
+        return this.ticketRepository.findById(idTicket);
     }
 
-    public boolean editTicket(Ticket ticket){
-        return this.ticketRepository.editTicket(ticket);
+    public Ticket editTicket(Ticket ticket){
+        this.ticketRepository.deleteById(ticket.getIdTicket());
+        return this.ticketRepository.save(ticket);
     }
 
-    public boolean deleteTicket(Integer idTicket){
-        return this.ticketRepository.deleteTicket(idTicket);
+    public void deleteTicket(Integer idTicket){this.ticketRepository.deleteById(idTicket);
     }
 
-    public ArrayList<Ticket> getAll(){
-        return this.ticketRepository.getAll();
+    public List<Ticket> getAll(){
+        return this.ticketRepository.findAll();
     }
 
 }//END OF THE CLASS
