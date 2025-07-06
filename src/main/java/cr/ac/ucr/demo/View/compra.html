@@ -2,27 +2,192 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">\
+    <title>Comprar Tickets</title>
+    <link rel="stylesheet" href="styleIndex.css"> <style>
+    .ticket-purchase-container {
+        background-color: #F8F1FF;
+        width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.8);
+        text-align: center;
+    }
+    .ticket-purchase-container label, .ticket-purchase-container input, .ticket-purchase-container select, .ticket-purchase-container button {
+        display: block;
+        margin: 15px auto;
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .ticket-purchase-container button {
+        background-color: #FFD23F;
+        color: #1B1B3A;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .ticket-purchase-container button:hover {
+        background-color: #e0b02a;
+    }
+    .show-details-info p {
+        margin: 5px 0;
+    }
+    .error-message {
+        color: red;
+        margin-top: 10px;
+    }
+    .success-message {
+        color: green;
+        margin-top: 10px;
+    }
+</style>
 </head>
 <body>
 
 <h1 style="text-align:center;">Detalle del Show</h1>
-<div id="detalle-show" style="margin: 0 auto; width:500px"></div>
+<div id="detalle-show" class="ticket-purchase-container"></div>
 
 <script>
     const show = JSON.parse(localStorage.getItem('showSeleccionado'));
     const contenedor = document.getElementById('detalle-show');
+    let currentShowAmountOfSeats = show.amountOfSeats; // Para actualizar los asientos en tiempo real
 
-    contenedor.innerHTML=`
-        <h2>Comprar Tickets para ${show.name}</h2>
-        <label>Tipo de Ticket:</label>
-        <select id="tipoTicket" name="Tipo de Ticket">
-            <option value="platea">Platea</option>
-            <option value="vip">vip</option>
-            <option value="general">General</option>
-        </select>
-    `
+    if (show) {
+        contenedor.innerHTML = `
+            <h2>Comprar Tickets para ${show.name}</h2>
+            <div class="show-details-info">
+                <p><strong>Fecha:</strong> ${new Date(show.showTime).toLocaleString()}</p>
+                <p><strong>Ubicación:</strong> ${show.location}</p>
+                <p><strong>Asientos Totales:</strong> <span id="total-seats">${currentShowAmountOfSeats}</span></p>
+            </div>
+
+            <label for="tipoTicket">Tipo de Ticket:</label>
+            <select id="tipoTicket" name="Tipo de Ticket">
+                <option value="general" data-price="${show.generalPrice}" data-available="${show.generalTicket}">General - ${show.generalPrice ? '$' + show.generalPrice.toFixed(2) : 'N/A'} (${show.generalTicket} disponibles)</option>
+                <option value="platea" data-price="${show.plateaPrice}" data-available="${show.plateaTicket}">Platea - ${show.plateaPrice ? '$' + show.plateaPrice.toFixed(2) : 'N/A'} (${show.plateaTicket} disponibles)</option>
+                <option value="vip" data-price="${show.vipPrice}" data-available="${show.vipTicket}">VIP - ${show.vipPrice ? '$' + show.vipPrice.toFixed(2) : 'N/A'} (${show.vipTicket} disponibles)</option>
+            </select>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" min="1" value="1" required>
+
+            <p><strong>Precio Total:</strong> <span id="precioTotal">$0.00</span></p>
+
+            <button id="comprarBtn">Comprar</button>
+            <p id="purchaseMessage" class="error-message"></p>
+        `;
+
+        const tipoTicketSelect = document.getElementById('tipoTicket');
+        const cantidadInput = document.getElementById('cantidad');
+        const precioTotalSpan = document.getElementById('precioTotal');
+        const comprarBtn = document.getElementById('comprarBtn');
+        const purchaseMessage = document.getElementById('purchaseMessage');
+        const totalSeatsSpan = document.getElementById('total-seats');
+
+        function updateTotalPrice() {
+            const selectedOption = tipoTicketSelect.options[tipoTicketSelect.selectedIndex];
+            const pricePerTicket = parseFloat(selectedOption.dataset.price);
+            const quantity = parseInt(cantidadInput.value);
+
+            if (!isNaN(pricePerTicket) && !isNaN(quantity) && quantity > 0) {
+                precioTotalSpan.textContent = `$${(pricePerTicket * quantity).toFixed(2)}`;
+            } else {
+                precioTotalSpan.textContent = "$0.00";
+            }
+        }
+
+        // Actualizar el precio inicial
+        updateTotalPrice();
+
+        tipoTicketSelect.addEventListener('change', updateTotalPrice);
+        cantidadInput.addEventListener('input', updateTotalPrice);
+
+        comprarBtn.addEventListener('click', async () => {
+            purchaseMessage.textContent = "";
+
+            const selectedOption = tipoTicketSelect.options[tipoTicketSelect.selectedIndex];
+            const category = selectedOption.value;
+            const pricePerTicket = parseFloat(selectedOption.dataset.price);
+            let availableTickets = parseInt(selectedOption.dataset.available);
+            const quantity = parseInt(cantidadInput.value);
+
+            if (quantity <= 0 || isNaN(quantity)) {
+                purchaseMessage.textContent = "La cantidad debe ser al menos 1.";
+                return;
+            }
+            if (quantity > availableTickets) {
+                purchaseMessage.textContent = `Solo quedan ${availableTickets} tickets de esta categoría.`;
+                return;
+            }
+            if (quantity > currentShowAmountOfSeats) {
+                purchaseMessage.textContent = `No hay suficientes asientos generales disponibles para el show. Max: ${currentShowAmountOfSeats}`;
+                return;
+            }
+
+            const idTicket = Math.floor(Math.random() * 1000000);
+
+            const ticketData = {
+                idTicket: idTicket,
+                price: (pricePerTicket * quantity),
+                show: show,
+                category: category,
+
+            };
+
+             const loggedInUserId = localStorage.getItem('loggedInUserId');
+             if (loggedInUserId) {
+                 ticketData.user = { idUser: parseInt(loggedInUserId) };
+             } else {
+
+                 purchaseMessage.textContent = "Debe iniciar sesión para comprar tickets.";
+                 return;
+             }
+
+
+            try {
+                const response = await fetch('http://localhost:8080/api/tickets', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ticketData)
+                });
+
+                if (response.status === 409) {
+                    purchaseMessage.textContent = "Error: Este ticket ya existe. Intenta de nuevo.";
+                    purchaseMessage.className = "error-message";
+                    return;
+                }
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error al comprar ticket: ${errorText || response.statusText}`);
+                }
+
+                const result = await response.json();
+                purchaseMessage.textContent = `Compra exitosa! Ticket ID: ${result.idTicket || idTicket}`;
+                purchaseMessage.className = "success-message";
+
+                availableTickets -= quantity;
+                selectedOption.dataset.available = availableTickets;
+                selectedOption.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} - $${pricePerTicket.toFixed(2)} (${availableTickets} disponibles)`;
+
+                currentShowAmountOfSeats -= quantity;
+                totalSeatsSpan.textContent = currentShowAmountOfSeats;
+
+            } catch (error) {
+                console.error('Error durante la compra:', error);
+                purchaseMessage.textContent = `Error en la compra: ${error.message}`;
+                purchaseMessage.className = "error-message";
+            }
+        });
+
+    } else {
+        contenedor.innerHTML = `<p style="text-align: center;">No se ha seleccionado ningún show.</p>`;
+    }
 </script>
 </body>
 </html>
