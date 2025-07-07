@@ -37,24 +37,6 @@ public class ShowController {
         return ResponseEntity.status(HttpStatus.CREATED).body(showDTO);
     }
 
-
-    /*@PostMapping
-    public ResponseEntity<?> addShow(@Validated @RequestBody Show show, BindingResult result){
-        if(result.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
-            for(FieldError error: result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errorMap);
-        }
-
-        if(showService.findByIdShow(show.getIdShow()).isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is registered");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(showService.addShow(show));
-    }*/
-
     @GetMapping
     public ResponseEntity<?> getAll(){
         if(showService.getAll().isEmpty()){

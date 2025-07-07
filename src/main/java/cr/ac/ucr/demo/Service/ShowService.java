@@ -1,13 +1,9 @@
 package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.Show;
-import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Repository.IShowRepository;
-import cr.ac.ucr.demo.Repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

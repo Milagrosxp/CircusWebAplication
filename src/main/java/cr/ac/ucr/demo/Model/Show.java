@@ -1,9 +1,7 @@
 package cr.ac.ucr.demo.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
