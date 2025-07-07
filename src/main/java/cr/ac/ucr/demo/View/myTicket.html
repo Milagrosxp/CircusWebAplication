@@ -1,13 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Tickets</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mis Tickets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F8F1FF;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #1B1B3A;
+    }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 6px 6px 8px rgba(0,0,0,0.3);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #FFD23F;
+      color: #1B1B3A;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <table id="tablaTickets">
-        
-    </table>
+  <h1>Mis Tickets</h1>
+  <table id="ticketsTable">
+    <thead>
+      <tr>
+        <th>ID Ticket</th>
+        <th>Show</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Se llenará con JS -->
+    </tbody>
+  </table>
+  <p id="message" class="error-message"></p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const idActiveUser = localStorage.getItem("idActiveUser");
+
+      // Si no hay usuario logueado, redirigir al login
+      if (!idActiveUser) {
+        window.location.href = "logIn.html";
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/tickets/user/${idActiveUser}`, {
+          credentials: "include"
+        });
+
+        if (!response.ok) {
+          throw new Error("Error obteniendo los tickets.");
+        }
+
+        const tickets = await response.json();
+        const tbody = document.querySelector("#ticketsTable tbody");
+        const message = document.getElementById("message");
+
+        if (tickets.length === 0) {
+          message.textContent = "No tienes tickets comprados.";
+          return;
+        }
+
+        tickets.forEach(ticket => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${ticket.idTicket}</td>
+            <td>${ticket.showName}</td>
+            <td>${ticket.category}</td>
+            <td>$${ticket.price.toFixed(2)}</td>
+          `;
+          tbody.appendChild(row);
+        });
+
+      } catch (error) {
+        console.error(error);
+        document.getElementById("message").textContent = "Error al cargar los tickets.";
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package cr.ac.ucr.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,10 +11,12 @@ public class Ticket {
     private Double price;
     @ManyToOne
     @JoinColumn(name = "idShow")
+
     private Show show;
     private String category;
     @ManyToOne
     @JoinColumn(name = "idUser")
+
     private User user;
 
     //CONSTRUCTOR

@@ -1,41 +1,48 @@
 package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.Ticket;
+import cr.ac.ucr.demo.Model.TicketDTO;
 import cr.ac.ucr.demo.Service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
 @RequestMapping("api/tickets")
 public class TicketController {
 
     @Autowired
     private TicketService ticketService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addTicket(@Validated @RequestBody Ticket ticket, BindingResult result){
         if(result.hasErrors()){
             Map<String, String> errorMap = new HashMap<>();
             for(FieldError error : result.getFieldErrors()){
                 errorMap.put(error.getField(), error.getDefaultMessage());
             }
-            return ResponseEntity.badRequest().body(errorMap);
+            return ResponseEntity.badRequest().body(new TicketDTO());
         }
-
-        if(ticketService.findByIdTicket(ticket.getIdTicket()).get().getIdTicket() != null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("This Ticket is already registered");
+        Optional<Ticket> optionalTicket = this.ticketService.findByIdTicket(ticket.getIdTicket());
+        if(optionalTicket.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new TicketDTO());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(ticketService.addTicket(ticket));
+        TicketDTO ticketDTO = new TicketDTO();
+        ticketDTO.setIdTicket(ticket.getIdTicket());
+        ticketDTO.setCategory(ticket.getCategory());
+        ticketDTO.setPrice(ticket.getPrice());
+        ticketDTO.setUserId(ticket.getUser().getIdUser());
+        ticketDTO.setShowId(ticket.getShow().getIdShow());
+        this.ticketService.addTicket(ticket);
+        return ResponseEntity.status(HttpStatus.OK).body(ticketDTO);
     }
 
     @GetMapping
@@ -79,5 +86,16 @@ public class TicketController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(ticketService.editTicket(ticket));
+    }
+    @GetMapping("/user/{idUser}")
+    public ResponseEntity<?> getTicketsByUser(@PathVariable Integer idUser) {
+        List<Ticket> tickets = ticketService.findByUserId(idUser);
+        List<TicketDTO> ticketDTOList = new ArrayList<>();
+        for(Ticket ticket:tickets){
+            TicketDTO ticketDTO = new TicketDTO();
+            ticketDTO.converToDTO(ticket);
+            ticketDTOList.add(ticketDTO);
+        }
+        return ResponseEntity.ok(ticketDTOList);
     }
 }//END OF THE CLASS

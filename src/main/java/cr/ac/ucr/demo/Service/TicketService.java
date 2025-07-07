@@ -35,5 +35,13 @@ public class TicketService {
     public List<Ticket> getAll(){
         return this.ticketRepository.findAll();
     }
-
+    public List<Ticket> findByUserId(Integer id){
+        List<Ticket> listaTicket = new ArrayList<>();
+        for(Ticket ticket: this.getAll()){
+            if(ticket.getUser().getIdUser()==id){
+                listaTicket.add(ticket);
+            }
+        }
+        return listaTicket;
+    }
 }//END OF THE CLASS

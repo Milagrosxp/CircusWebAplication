@@ -67,6 +67,10 @@
                           <label class="form-label">Location</label>
                           <input type="text" class="form-control" name="location" />
                       </div>
+                      <div class="mb-3">
+                          <label class="form-label">Image</label>
+                          <input type="text" class="form-control" name="image" />
+                      </div>
                       <button type="submit" class="btn btn-primary">Register Show</button>
                   </form>
               </div>
@@ -196,7 +200,8 @@
           vipTicket: form.vipTicket.value ? parseInt(form.vipTicket.value) : 0,
           vipPrice: form.vipPrice.value ? parseFloat(form.vipPrice.value) : 0,
           showTime: form.showTime.value ? new Date(form.showTime.value).toISOString() : null,
-          location: form.location.value
+          location: form.location.value,
+          image: form.image.value
         };
 
         let url = 'http://localhost:8080/api/shows';

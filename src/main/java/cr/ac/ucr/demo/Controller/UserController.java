@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.User;
+import cr.ac.ucr.demo.Model.UserDTO;
 import cr.ac.ucr.demo.Service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.apache.coyote.Response;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
 @RequestMapping("api/users")
 public class UserController {
 
@@ -39,8 +40,12 @@ public class UserController {
         if(userService.findByIdUser(user.getIdUser()).isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is registered");
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(userService.addUser(user));
+        userService.addUser(user);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setIdUser(user.getIdUser());
+        userDTO.setName(user.getName());
+        userDTO.setTelephone(user.getTelephone());
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
     @GetMapping
@@ -89,8 +94,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> logIn(@RequestBody User user, HttpSession session){
+        System.out.println("Entró al login");
         if(this.userService.userExist(user.getIdUser(), user.getPassword())){
             session.setAttribute("activeSession", this.userService.findByIdUser(user.getIdUser()).get());
+
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
@@ -98,6 +105,7 @@ public class UserController {
 
     @GetMapping("/activeUser")
     public ResponseEntity<?> getActiveUser(HttpSession session){
+
         return ResponseEntity.status(HttpStatus.OK).body(session.getAttribute("activeSession"));
     }
 }

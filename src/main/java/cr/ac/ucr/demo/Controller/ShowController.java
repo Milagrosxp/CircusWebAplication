@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Controller;
 
 import cr.ac.ucr.demo.Model.Show;
+import cr.ac.ucr.demo.Model.ShowDTO;
 import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,29 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
 @RequestMapping("api/shows")
 public class ShowController {
     @Autowired
     ShowService showService;
 
     @PostMapping
-    public ResponseEntity<Show> addShow(@RequestBody Show show) {
-        Show nuevo = showService.addShow(show);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+    public ResponseEntity<?> addShow(@RequestBody Show show) {
+        showService.addShow(show);
+        ShowDTO showDTO = new ShowDTO();
+        showDTO.setShowTime(show.getShowTime());
+        showDTO.setGeneralTicket(show.getGeneralTicket());
+        showDTO.setGeneralPrice(show.getGeneralPrice());
+        showDTO.setPlateaTicket(show.getPlateaTicket());
+        showDTO.setPlateaPrice(show.getPlateaPrice());
+        showDTO.setVipTicket(show.getVipTicket());
+        showDTO.setVipPrice(show.getVipPrice());
+        showDTO.setLocation(show.getLocation());
+        showDTO.setName(show.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(showDTO);
     }
 
 
@@ -51,7 +60,13 @@ public class ShowController {
         if(showService.getAll().isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No shows registered yet");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(showService.getAll());
+        List<ShowDTO> showDTOList = new ArrayList<>();
+        for(int i=0;i<showService.getAll().size();i++){
+            ShowDTO showDTO=new ShowDTO();
+            showDTO.convertToDTO(showService.getAll().get(i));
+            showDTOList.add(showDTO);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(showDTOList);
     }
 
     @GetMapping("/{id}")

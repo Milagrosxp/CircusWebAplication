@@ -1,6 +1,7 @@
 package cr.ac.ucr.demo.Service;
 
 import cr.ac.ucr.demo.Model.Manager;
+import cr.ac.ucr.demo.Model.User;
 import cr.ac.ucr.demo.Repository.IManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,15 @@ public class ManagerService {
 
     public List<Manager> getAll(){
         return this.managerRepository.findAll();
+    }
+
+    public boolean userExist(Integer id, String password){
+        for(Manager user:this.getAll()){
+            if(user.getIdManager()==id && user.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }//END OF THE CLASS
