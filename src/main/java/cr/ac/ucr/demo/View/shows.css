@@ -1,20 +1,197 @@
-.form-button {
-    background-color: #2f615e;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+:root {
+  --rojo-carmesi: #D72638;
+  --amarillo-oro: #FFD23F;
+  --azul-marino: #1B1B3A;
+  --blanco-crema: #F8F1FF;
+  --negro-humo: #2E2E2E;
+  --sombra: 0 4px 10px rgba(0, 0, 0, 0.4);
+  --fuente-principal: 'Montserrat', sans-serif;
+  --fuente-titulos: 'Rye', cursive;
 }
 
-.form-button:hover {
-    background-color: #246055;
+body {
+  font-family: var(--fuente-principal);
+  background-color: var(--azul-marino);
+  color: var(--azul-marino);
+  margin: 0;
+  padding: 20px 10px;
+  min-height: 100vh;
 }
 
-div {
+nav.navbar {
+  background-color: var(--azul-marino);
+  box-shadow: var(--sombra);
+  padding: 1rem 2rem;
+}
+
+nav.navbar .navbar-brand {
+  font-family: var(--fuente-titulos);
+  color: var(--amarillo-oro);
+  font-weight: 900;
+  font-size: 2rem;
+  text-shadow: 1px 1px 2px var(--rojo-carmesi);
+}
+
+nav.navbar .btn-outline-danger {
+  color: var(--rojo-carmesi);
+  border-color: var(--rojo-carmesi);
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+nav.navbar .btn-outline-danger:hover {
+  background-color: var(--rojo-carmesi);
+  color: var(--blanco-crema);
+  border-color: var(--rojo-carmesi);
+  box-shadow: 0 0 12px var(--rojo-carmesi);
+}
+
+.container-fluid.mt-4 {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background-color: var(--blanco-crema);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: var(--sombra);
+}
+
+h4 {
+  font-family: var(--fuente-titulos);
+  font-weight: 900;
+  color: var(--rojo-carmesi);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 1px 1px 3px var(--negro-humo);
+}
+
+.border.p-4 {
+  background-color: #fff8f0;
+  border: 3px solid var(--rojo-carmesi);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(215, 38, 56, 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+.border.p-4:hover {
+  box-shadow: 0 8px 25px rgba(215, 38, 56, 0.7);
+}
+
+form label {
+  color: var(--azul-marino);
+  font-weight: 700;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+form input.form-control {
+  border: 2px solid var(--rojo-carmesi);
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+form input.form-control:focus {
+  border-color: var(--rojo-carmesi);
+  box-shadow: 0 0 10px var(--rojo-carmesi);
+  outline: none;
+}
+
+button.btn-primary {
+  background-color: var(--rojo-carmesi);
+  border: none;
+  border-radius: 25px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 12px 0;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(215, 38, 56, 0.5);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.btn-primary:hover {
+  background-color: var(--amarillo-oro);
+  color: var(--azul-marino);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 210, 63, 0.7);
+}
+
+table.table {
+  background-color: var(--blanco-crema);
+  border-radius: 15px;
+  box-shadow: var(--sombra);
+  font-weight: 600;
+  font-family: var(--fuente-principal);
+  color: var(--azul-marino);
+  overflow: hidden;
+}
+
+table thead {
+  background-color: var(--rojo-carmesi);
+  color: var(--blanco-crema);
+  font-family: var(--fuente-titulos);
+  font-weight: 900;
+  text-shadow: 1px 1px 3px var(--negro-humo);
+}
+
+table tbody tr:hover {
+  background-color: #ffe6e9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-warning {
+  background-color: var(--amarillo-oro);
+  border: none;
+  color: var(--azul-marino);
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #e6c02f;
+  color: var(--negro-humo);
+}
+
+.btn-danger {
+  background-color: var(--rojo-carmesi);
+  border: none;
+  color: var(--blanco-crema);
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #b01f2a;
+  color: var(--blanco-crema);
+}
+
+.message {
+  text-align: center;
+  font-weight: 700;
+  font-family: var(--fuente-titulos);
+  margin: 1rem 0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: var(--sombra);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.message.success {
+  background-color: var(--amarillo-oro);
+  color: var(--azul-marino);
+}
+
+.message.error {
+  background-color: var(--rojo-carmesi);
+  color: var(--blanco-crema);
 }
