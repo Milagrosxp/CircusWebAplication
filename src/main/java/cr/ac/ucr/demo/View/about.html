@@ -3,46 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circus Tickets</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/about.css">
+    <title>MagicTicket</title>
+    <!--Bootstrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--CSS Style-->
+    <link rel="stylesheet" href="assets/css/styleAboutLegal.css">
 </head>
 <body>
-
-    <header class="circus-header">
-        <div class="header-content">
-            <div class="logo">
-                <h1>Circus Ticket</h1>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="shows.html">SHOWS</a></li>
-                    <li><a href="buy-tickets.html">TICKETS</a></li>
-                    <li><a href="about.html" class="active">ABOUT</a></li>
+<header class="bannerAbout">
+    <!--NAVBAR-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-scroll" data-mdb-navbar-init>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="indexPrincipal.html"><img src="assets/img/CircusLogo.png" height="110" width="100" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <i class="bi bi-ticket-perforated"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="indexPrincipal.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="legal.html">Legal Aspects</a></li>
                 </ul>
-                <a href="buy-tickets.html" class="btn-buy">BUY TICKETS</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="about-main">
-        <div class="container">
-            <h2>ABOUT US</h2>
-            <div class="about-content">
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliguee ultere platera feisculas aluteise, se dulo rullu.</p>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aligeee uiteto platera feiculas aluteise-se dulo rullu.</p>
-                <img src="images/circus-tent.jpg" alt="Circus Tent" class="about-image">
             </div>
         </div>
-    </main>
+    </nav>
+</header>
 
-    <!-- Footer -->
-    <footer class="circus-footer">
-        <div class="container">
-            <p>&copy; 2023 Circus Tickets. All rights reserved.</p>
+<main style="background-color: #F8F1FF;">
+    <!--Who we are-->
+    <section class="intro py-5">
+        <div class="row">
+            <div class="animate-on-scroll col-12 col-md-6">
+                <video src="assets/video/acrobaciaTrapecio.mp4" autoplay loop muted playsinline  poster="assets/img/abrobaciaRespaldo.jpg">Your browser does not support the video tag.</video>
+            </div>
+            <div class="col-12 col-md-6">
+                <h1 class="animate-on-scroll">Who We Are?</h1>
+                <p class="animate-on-scroll"><br><strong>MagicTicket</strong> is your all-in-one digital platform for discovering and booking circus shows. We connect circus lovers with unforgettable performances, making ticket reservations quick, easy, and accessible for everyone.
+                    <br><br>
+                    Born from the passion of students at the University of Costa Rica, our platform blends creativity, innovation, and a love for the performing arts to bring you the best circus experiences.
+                </p>
+            </div>
         </div>
-    </footer>
+    </section>
+
+    <!--Mission & Vision-->
+    <section class="py-5" style="background-color: #D72638;">
+        <div class="row">
+            <div class="col-12 col-md-6" id="Mision">
+                <h2 class="animate-on-scroll">Our Mission</h2>
+                <p class="animate-on-scroll">To make the magic of the circus accessible to everyone, everywhere. We aim to simplify the ticket booking process while supporting the circus community and spreading joy through entertainment.</p>
+                <img src="assets/img/mission.webp" alt="Mission">
+            </div>
+            <div class="col-12 col-md-6" id="Vision">
+                <h2 class="animate-on-scroll">Our Vision</h2>
+                <p class="animate-on-scroll">To become the leading digital platform for circus shows worldwide—empowering artists, delighting audiences, and keeping the circus spirit alive in the digital age.</p>
+                <img src="assets/img/vision.jpeg" alt="Vision">
+            </div>
+        </div>
+    </section>
+
+    <!--Values-->
+    <section class="intro" id="values">
+        <h2 class="animate-on-scroll">Our Core Values</h2>
+        <div class="row">
+            <div class="animate-on-scroll col-12 col-md-4">
+                <i class="bi bi-universal-access-circle"></i>
+                <h4><strong>Accessibility</strong></h4>
+                <p>We believe everyone should enjoy the circus, no matter where they are. That’s why we’ve built an easy-to-use, fast, and responsive platform for all types of users.</p>
+            </div>
+            <div class="animate-on-scroll col-12 col-md-4">
+                <i class="bi bi-heart-pulse-fill"></i>
+                <h4><strong>Passion for Entertainment</strong></h4>
+                <p>We live for magic, laughter, and the thrill only a circus can bring. Our team is dedicated to creating unforgettable user experiences—every step of the way.</p>
+            </div>
+            <div class="animate-on-scroll col-12 col-md-4">
+                <i class="bi bi-shield-shaded"></i>
+                <h4><strong>Trust & Security</strong></h4>
+                <p>We take your privacy and security seriously. MagicTicket offers a secure, reliable space for managing your data and transactions with complete confidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!--Team-->
+    <section class="py-5" id="team">
+        <div class="row">
+            <div class="animate-on-scroll col-12 col-md-6">
+                <img src="assets/img/Team.jpeg" alt="Team">
+            </div>
+            <div class="col-12 col-md-6 py-5">
+                <h1 class="animate-on-scroll"><br>Our Team</h1>
+                <p class="animate-on-scroll">We are a group of enthusiastic Computer Engineering students from the <strong>University of Costa Rica</strong>, united by our shared love for innovation and showbiz. With backgrounds in software development, user experience design, and event coordination, we’ve come together to create a platform that redefines how circus fans connect with their favorite shows.
+                    <br><br>
+                    Our diversity fuels our creativity, and our technical skills drive the performance behind MagicTicket.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!--Why MagicTicket-->
+    <section class="container py-5" id="Compromiso">
+        <h2 class="animate-on-scroll">Why MagicTicket?</h2>
+        <div class="row py-5">
+            <div class="col-12 col-md-4">
+                <i class="bi bi-chat-square-heart-fill animate-on-scroll"></i>
+                <h4 class="animate-on-scroll"><strong>Seamless Experience</strong></h4>
+                <p class="animate-on-scroll">A user-friendly platform designed with you in mind—smooth, intuitive, and mobile-ready.</p>
+            </div>
+            <div class="col-12 col-md-4">
+                <i class="bi bi-wifi animate-on-scroll"></i>
+                <h4 class="animate-on-scroll"><strong>Real-Time Ticketing</strong></h4>
+                <p class="animate-on-scroll">Browse upcoming shows, pick your seat, and get your digital ticket instantly.</p>
+            </div>
+            <div class="col-12 col-md-4">
+                <i class="bi bi-journal-arrow-up animate-on-scroll"></i>
+                <h4 class="animate-on-scroll"><strong>Stay Updated</strong></h4>
+                <p class="animate-on-scroll">See real-time information about shows, promotions, and new circus events.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <i class="bi bi-globe animate-on-scroll"></i>
+                <h4 class="animate-on-scroll"><strong>Support Local & Global Acts</strong></h4>
+                <p class="animate-on-scroll">Discover shows from big-name circuses and independent performers alike.</p>
+            </div>
+            <div class="col-12 col-md-6">
+                <i class="bi bi-shop animate-on-scroll"></i>
+                <h4 class="animate-on-scroll"><strong>Community First</strong></h4>
+                <p class="animate-on-scroll">Built by and for circus lovers—our users help shape the future of MagicTicket.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!--FOOTER-->
+<footer>
+    <div class="footer-content row">
+        <h1 class="animate-on-scroll">Thanks for coming this far!</h1>
+        <div class="redes-sociales col">
+            <div class="row animate-on-scroll" id="social">
+                <h2 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Be updated on the latest shows:</h2>
+                <a href="https://facebook.com/MagicTicket" target="_blank"><i class="bi bi-facebook"> MagicTicket</i></a>
+                <a href="https://twitter.com/MagicTicket" target="_blank"><i class="bi bi-twitter-x"> MagicTicket</i></a>
+                <a href="https://instagram.com/Magic_Ticket_CR" target="_blank"><i class="bi bi-instagram"> Magic_Ticket_CR</i></a>
+                <a href="https://instagram.com/Magic-Ticket" target="_blank"><i class="bi bi-tiktok"> Magic-Ticket</i></a>
+            </div>
+        </div>
+        <div class="col animate-on-scroll">
+            <div class="redes-sociales row" id="touch">
+                <h2 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Want to get in touch?</h2>
+                <a href="mailto:magicticket@gmail.com"><i class="bi bi-envelope-at-fill"> magicticket@gmail.com</i></a>
+                <a href="https://www.google.com/maps/place/Universidad+de+Costa+Rica+(Sede+del+Pac%C3%ADfico)/@9.9815584,-84.8106767,17z/data=!4m7!3m6!1s0x8fa02e597100a0f1:0x617ab3a3e72c0d8f!8m2!3d9.9815584!4d-84.8106767!10e1!16s%2Fg%2F1td3mnjl?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D"><i class="bi bi-geo-alt-fill"> Made By UCR Students. X5JQ+JPG, Av. 1, Provincia de Puntarenas, Puntarenas, Barrio El Cocal</i></a>
+                <a href="https://github.com/Milagrosxp/CircusWebAplication"><i class="bi bi-github"> ///Milagrosxp</i></a>
+            </div>
+        </div>
+        <div class="col animate-on-scroll" id="imgLogo">
+            <div class="row">
+                <img src="assets/img/CircusLogo.png" alt="Logo">
+            </div>
+        </div>
+        <p>&copy; 2025 MagicTicket. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
